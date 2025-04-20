@@ -1,44 +1,88 @@
+/* 💡 Desafio Integrado: Lista, Pilha e Fila
+
+Implemente em C três estruturas separadas: Lista, Pilha e Fila, todas usando 
+o mesmo tipo de nó com valor e ponteiro para o próximo.
+
+Depois:
+	•	Crie um menu interativo para o usuário escolher qual estrutura usar.
+	•	Permita inserir, remover e imprimir os elementos conforme a estrutura escolhida.
+
+🎯 Requisitos:
+	1.	Use o mesmo typedef struct No:
+    typedef struct No {
+        int valor;
+        struct No* proximo;
+    } No;
+
+    2.	Crie:
+	•	Funções inserir_lista, remover_lista, imprimir_lista
+	•	Funções push, pop, imprimir_pilha
+	•	Funções enqueue, dequeue, imprimir_fila
+	
+    3.	No main, faça um menu mais ou menos assim:
+    
+    1 - Usar Lista
+    2 - Usar Pilha
+    3 - Usar Fila
+    0 - Sair
+
+    Se o usuário escolher uma opção, ele poderá:
+    a - Inserir valor
+    b - Remover valor
+    c - Imprimir estrutura
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
-// Protótipos dos menus
-void menu_principal();
-void menu_lista_simples();
-// (futuramente: menu_lista_dupla(), menu_lista_circular(), ...)
+typedef struct No
+{
+    int valor;
+    struct No* p_no;
+} No;
 
-int main() {
-    menu_principal();
-    return 0;
+// Protótipos
+No* criar_no(10, NULL);
+
+//void inserir_lista(No ** p_p_inicio_lista, int valor, int posicao);
+//void remover_lista();
+void imprimir_lista();
+//int tamanho_lista();
+
+int main()
+{
+    No* lista = criar_no(10);
+
+    imprimir_lista(lista);
+
+
 }
 
-// Menu principal: escolha do tipo de lista
-void menu_principal() {
-    int escolha;
-    while (1) {
-        printf("\n===== MENU PRINCIPAL =====\n");
-        printf("Escolha o tipo de lista:\n");
-        printf("1. Lista Encadeada Simples\n");
-        printf("2. Lista Duplamente Encadeada\n");
-        printf("3. Lista Circular Simples\n");
-        printf("0. Sair\n");
-        printf("Digite sua opção: ");
-        scanf("%d", &escolha);
+No* criar_no(int valor, No* p_next)
+{
+    No* p_no = (No*)malloc(sizeof(No));
+    if (p_no == NULL) {
+        printf("[criar_no] Erro de alocação de memória!\n");
+        exit(1);
+    }
+    p_no->valor = valor;
+    p_no->p_no = p_next;
+    return p_no;
+}
 
-        switch (escolha) {
-            case 1:
-                printf("Lista Simplesmente Encadeada ainda não implementada.\n");
-                break;
-            case 2:
-                printf("Lista Duplamente Encadeada ainda não implementada.\n");
-                break;
-            case 3:
-                printf("Lista Circular Simples ainda não implementada.\n");
-                break;
-            case 0:
-                printf("Encerrando o programa.\n");
-                return;
-            default:
-                printf("Opção inválida. Tente novamente.\n");
+void imprimir_lista(No* no_inicial)
+{
+    if (no_inicial == NULL)
+    {
+        printf("A lista está vazia!\n");
+    }
+    else 
+    {
+        while(no_inicial != NULL)
+        {
+            printf("[ %d ]", no_inicial->valor);
+            no_inicial = no_inicial->p_no;
         }
+        printf("\n");
     }
 }
